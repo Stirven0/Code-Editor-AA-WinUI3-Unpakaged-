@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Code_Editor__AA___WinUI3___Unpakaged_"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Code_Editor__AA___WinUI3___Unpakaged_"
+    Title="Code Editor"
     mc:Ignorable="d">
 
     <Window.SystemBackdrop>
@@ -19,49 +19,44 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="TitleBarGrid"
-          Grid.Row="0"
-          Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-          VerticalAlignment="Center">
 
+        <!-- Title bar + menu -->
+        <Grid x:Name="TitleBarGrid"
+              Grid.Row="0"
+              Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+              VerticalAlignment="Center">
             <MenuBar VerticalAlignment="Center">
                 <MenuBarItem Title="Archivo">
-                    <MenuFlyoutItem Text="Nuevo"/>
-                    <MenuFlyoutItem Text="Abrir"/>
+                    <MenuFlyoutItem Text="Nuevo" Click="NewFile_Click"/>
+                    <MenuFlyoutItem Text="Abrir" Click="OpenFile_Click"/>
+                    <MenuFlyoutItem Text="Guardar" Click="SaveFile_Click"/>
+                    <MenuFlyoutItem Text="Guardar como..." Click="SaveAsFile_Click"/>
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Text="Salir" Click="FlyoutExit_Click"/>
                 </MenuBarItem>
 
                 <MenuBarItem Title="Editar">
-                    <MenuFlyoutItem Text="Copiar"/>
-                    <MenuFlyoutItem Text="Pegar"/>
+                    <MenuFlyoutItem Text="Copiar" Click="EditCopy_Click"/>
+                    <MenuFlyoutItem Text="Pegar" Click="EditPaste_Click"/>
+                </MenuBarItem>
+
+                <MenuBarItem Title="Ayuda">
+                    <MenuFlyoutItem Text="Acerca de" Click="FlyoutAbout_Click"/>
                 </MenuBarItem>
             </MenuBar>
         </Grid>
 
-        <StackPanel
-            Grid.Row="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Spacing="8">
-            <TextBlock
-                Style="{ThemeResource BodyTextBlockStyle}"
-                Text="Las veces pulsadas el botón"
-                TextAlignment="Center"
-                TextWrapping="WrapWholeWords" />
-            <TextBlock
-                x:Name="NumberText"
-                Style="{ThemeResource TitleTextBlockStyle}"
-                Text="0"
-                TextAlignment="Center"
-                TextWrapping="WrapWholeWords" />
-            <Button
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Click="Increment_Click"
-                Style="{ThemeResource AccentButtonStyle}">
-                <StackPanel>
-                    <SymbolIcon Symbol="Add" />
-                </StackPanel>
-            </Button>
-        </StackPanel>
+        <!-- Quick command bar -->
+        <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Add" Label="Nuevo" Click="NewFile_Click"/>
+            <AppBarButton Icon="OpenPane" Label="Abrir" Click="OpenFile_Click"/>
+            <AppBarButton Icon="Save" Label="Guardar" Click="SaveFile_Click"/>
+        </CommandBar>
+
+        <!-- Editor area: TabView -->
+        <TabView x:Name="EditorTabView"
+                 Grid.Row="2"
+                 TabCloseRequested="EditorTabView_TabCloseRequested"
+                 Margin="8"/>
     </Grid>
 </Window>
